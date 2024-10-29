@@ -37,7 +37,22 @@ class ProductsViewController: UIViewController {
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
+        
+        viewModel.$errorMessage
+            .compactMap{$0}
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] message in
+                self?.showAlert(message: message)
+            }
+            .store(in: &cancellables)
     }
+    
+    func showAlert(message: String){
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
 }
 
 extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
@@ -51,5 +66,34 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
         let product = viewModel.products[indexPath.row]
         cell.configureCell(with: product)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastSectionIndex = tableView.numberOfSections - 1
+        let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
+        if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
+            let spinner = UIActivityIndicatorView(style: .medium)
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+            
+            self.tableView.tableFooterView = spinner
+            self.tableView.tableFooterView?.isHidden = false
+            
+            if !viewModel.hasMoreData {
+                self.tableView.tableFooterView?.isHidden = true
+                self.tableView.tableFooterView = nil
+            }
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - frameHeight - 100 {
+            guard let lastProduct = viewModel.products.last else { return }
+            viewModel.fetchMoreProducts(currentProduct: lastProduct)
+        }
     }
 }

@@ -12,6 +12,7 @@ class ProductsViewModel: ObservableObject{
     @Published var products: [Product] = []
     @Published var isLoading = false
     @Published var hasMoreData = true
+    @Published var errorMessage: String?
     private var cancellables = Set<AnyCancellable>()
     private let productService: ProductService
     private var limit = 7
@@ -27,7 +28,11 @@ class ProductsViewModel: ObservableObject{
           productService.fetchProducts(limit: currentPage + limit)
               .sink(receiveCompletion: { [weak self] completion in
                   self?.isLoading = false
-                  if case .failure(_) = completion {
+                  switch completion {
+                  case .finished:
+                      break
+                  case .failure(let error):
+                      self?.errorMessage = error.localizedDescription
                       self?.hasMoreData = false
                   }
               }, receiveValue: { [weak self] returnedProducts in
@@ -44,4 +49,12 @@ class ProductsViewModel: ObservableObject{
               })
               .store(in: &cancellables)
       }
+    
+    
+   func fetchMoreProducts(currentProduct: Product){
+        guard let lastProduct = products.last else { return }
+        if currentProduct.id == lastProduct.id && hasMoreData && !isLoading {
+            fetchProducts()
+        }
+    }
 }
