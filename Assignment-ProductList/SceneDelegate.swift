@@ -10,11 +10,9 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let initialViewController = ProductsViewController(nibName: "ProductsViewController", bundle: nil)
+        let initialViewController = ProductsViewController(viewModel: ProductsViewModel(service: ProductService()))
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = UINavigationController(rootViewController: initialViewController)
         window?.makeKeyAndVisible()

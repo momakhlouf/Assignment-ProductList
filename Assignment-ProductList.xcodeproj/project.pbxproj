@@ -18,6 +18,10 @@
 		A893AE282CD1389900717A49 /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE262CD1389900717A49 /* ProductsViewController.swift */; };
 		A893AE292CD1389900717A49 /* ProductsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A893AE272CD1389900717A49 /* ProductsViewController.xib */; };
 		A893AE2B2CD138AD00717A49 /* ProductsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE2A2CD138AD00717A49 /* ProductsViewModel.swift */; };
+		A893AE6B2CD13C7500717A49 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE692CD13C7500717A49 /* ProductCell.swift */; };
+		A893AE6C2CD13C7500717A49 /* ProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A893AE6A2CD13C7500717A49 /* ProductCell.xib */; };
+		A893AE6F2CD13D3300717A49 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE6E2CD13D3300717A49 /* ProductService.swift */; };
+		A893AE722CD1748E00717A49 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A893AE712CD1748E00717A49 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,9 @@
 		A893AE262CD1389900717A49 /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		A893AE272CD1389900717A49 /* ProductsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductsViewController.xib; sourceTree = "<group>"; };
 		A893AE2A2CD138AD00717A49 /* ProductsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewModel.swift; sourceTree = "<group>"; };
+		A893AE692CD13C7500717A49 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		A893AE6A2CD13C7500717A49 /* ProductCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductCell.xib; sourceTree = "<group>"; };
+		A893AE6E2CD13D3300717A49 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A893AE722CD1748E00717A49 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +111,7 @@
 		A893ADEA2CD1364E00717A49 /* Assignment-ProductList */ = {
 			isa = PBXGroup;
 			children = (
+				A893AE6D2CD13CD500717A49 /* Services */,
 				A893AE1D2CD137D300717A49 /* Products */,
 				A893AE1C2CD137D000717A49 /* ProductDetails */,
 				A893ADEB2CD1364E00717A49 /* AppDelegate.swift */,
@@ -162,6 +171,7 @@
 		A893AE1F2CD137FD00717A49 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A893AE682CD13C4900717A49 /* Cell */,
 				A893AE262CD1389900717A49 /* ProductsViewController.swift */,
 				A893AE272CD1389900717A49 /* ProductsViewController.xib */,
 			);
@@ -197,6 +207,23 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		A893AE682CD13C4900717A49 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A893AE692CD13C7500717A49 /* ProductCell.swift */,
+				A893AE6A2CD13C7500717A49 /* ProductCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A893AE6D2CD13CD500717A49 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A893AE6E2CD13D3300717A49 /* ProductService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -213,6 +240,9 @@
 			dependencies = (
 			);
 			name = "Assignment-ProductList";
+			packageProductDependencies = (
+				A893AE712CD1748E00717A49 /* Kingfisher */,
+			);
 			productName = "Assignment-ProductList";
 			productReference = A893ADE82CD1364E00717A49 /* Assignment-ProductList.app */;
 			productType = "com.apple.product-type.application";
@@ -285,6 +315,9 @@
 				Base,
 			);
 			mainGroup = A893ADDF2CD1364D00717A49;
+			packageReferences = (
+				A893AE702CD1748E00717A49 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = A893ADE92CD1364E00717A49 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -302,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A893ADF82CD1364F00717A49 /* LaunchScreen.storyboard in Resources */,
+				A893AE6C2CD13C7500717A49 /* ProductCell.xib in Resources */,
 				A893ADF52CD1364F00717A49 /* Assets.xcassets in Resources */,
 				A893AE292CD1389900717A49 /* ProductsViewController.xib in Resources */,
 			);
@@ -331,7 +365,9 @@
 				A893AE252CD1386E00717A49 /* ProductResponse.swift in Sources */,
 				A893ADEC2CD1364E00717A49 /* AppDelegate.swift in Sources */,
 				A893AE282CD1389900717A49 /* ProductsViewController.swift in Sources */,
+				A893AE6B2CD13C7500717A49 /* ProductCell.swift in Sources */,
 				A893AE2B2CD138AD00717A49 /* ProductsViewModel.swift in Sources */,
+				A893AE6F2CD13D3300717A49 /* ProductService.swift in Sources */,
 				A893ADEE2CD1364E00717A49 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -673,6 +709,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A893AE702CD1748E00717A49 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A893AE712CD1748E00717A49 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A893AE702CD1748E00717A49 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A893ADE02CD1364D00717A49 /* Project object */;
 }
