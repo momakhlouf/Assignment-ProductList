@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import SkeletonView
 class ProductsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var viewModel: ProductsViewModel
@@ -24,6 +25,13 @@ class ProductsViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupBindings()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if viewModel.isLoading{
+            tableView.isSkeletonable = true
+            tableView.showSkeleton()
+        }
     }
     func setupTableView(){
         tableView.delegate = self
@@ -45,6 +53,19 @@ class ProductsViewController: UIViewController {
                 self?.showAlert(message: message)
             }
             .store(in: &cancellables)
+        
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                guard let self = self else { return }
+                if isLoading {
+                    self.tableView.showSkeleton()
+                } else {
+                    self.tableView.hideSkeleton()
+                }
+                self.tableView.reloadData()
+            }
+            .store(in: &cancellables)
     }
     
     func showAlert(message: String){
@@ -52,7 +73,6 @@ class ProductsViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-    
 }
 
 extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
@@ -85,15 +105,28 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
             }
         }
     }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let frameHeight = scrollView.frame.size.height
         
-        if offsetY > contentHeight - frameHeight - 100 {
-            guard let lastProduct = viewModel.products.last else { return }
-            viewModel.fetchMoreProducts(currentProduct: lastProduct)
-        }
+        if offsetY > contentHeight - frameHeight - 200 {  // Reduced threshold
+                    guard let lastProduct = viewModel.products.last else { return }
+                    if !viewModel.isFetchingMore {  // Ensure only one fetch at a time
+                        viewModel.fetchMoreProducts(currentProduct: lastProduct)
+                    }
+                }
+    }
+}
+
+extension ProductsViewController: SkeletonTableViewDataSource {
+    func numSections(in collectionSkeletonView: UITableView) -> Int {
+        return 1
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "productCell"
     }
 }

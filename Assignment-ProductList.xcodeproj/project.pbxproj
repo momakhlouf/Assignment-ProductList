@@ -22,6 +22,8 @@
 		A893AE6C2CD13C7500717A49 /* ProductCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A893AE6A2CD13C7500717A49 /* ProductCell.xib */; };
 		A893AE6F2CD13D3300717A49 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE6E2CD13D3300717A49 /* ProductService.swift */; };
 		A893AE722CD1748E00717A49 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A893AE712CD1748E00717A49 /* Kingfisher */; };
+		A893AE742CD195AF00717A49 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE732CD195AF00717A49 /* NetworkManager.swift */; };
+		A893AE802CD1F9E400717A49 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = A893AE7F2CD1F9E400717A49 /* SkeletonView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,7 @@
 		A893AE692CD13C7500717A49 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		A893AE6A2CD13C7500717A49 /* ProductCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductCell.xib; sourceTree = "<group>"; };
 		A893AE6E2CD13D3300717A49 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		A893AE732CD195AF00717A49 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A893AE802CD1F9E400717A49 /* SkeletonView in Frameworks */,
 				A893AE722CD1748E00717A49 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				A893AE6E2CD13D3300717A49 /* ProductService.swift */,
+				A893AE732CD195AF00717A49 /* NetworkManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 			name = "Assignment-ProductList";
 			packageProductDependencies = (
 				A893AE712CD1748E00717A49 /* Kingfisher */,
+				A893AE7F2CD1F9E400717A49 /* SkeletonView */,
 			);
 			productName = "Assignment-ProductList";
 			productReference = A893ADE82CD1364E00717A49 /* Assignment-ProductList.app */;
@@ -317,6 +323,7 @@
 			mainGroup = A893ADDF2CD1364D00717A49;
 			packageReferences = (
 				A893AE702CD1748E00717A49 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A893AE7E2CD1F9E400717A49 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = A893ADE92CD1364E00717A49 /* Products */;
 			projectDirPath = "";
@@ -366,6 +373,7 @@
 				A893ADEC2CD1364E00717A49 /* AppDelegate.swift in Sources */,
 				A893AE282CD1389900717A49 /* ProductsViewController.swift in Sources */,
 				A893AE6B2CD13C7500717A49 /* ProductCell.swift in Sources */,
+				A893AE742CD195AF00717A49 /* NetworkManager.swift in Sources */,
 				A893AE2B2CD138AD00717A49 /* ProductsViewModel.swift in Sources */,
 				A893AE6F2CD13D3300717A49 /* ProductService.swift in Sources */,
 				A893ADEE2CD1364E00717A49 /* SceneDelegate.swift in Sources */,
@@ -719,6 +727,14 @@
 				minimumVersion = 8.1.0;
 			};
 		};
+		A893AE7E2CD1F9E400717A49 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -726,6 +742,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A893AE702CD1748E00717A49 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		A893AE7F2CD1F9E400717A49 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A893AE7E2CD1F9E400717A49 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
