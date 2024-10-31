@@ -24,6 +24,10 @@
 		A893AE722CD1748E00717A49 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A893AE712CD1748E00717A49 /* Kingfisher */; };
 		A893AE742CD195AF00717A49 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE732CD195AF00717A49 /* NetworkManager.swift */; };
 		A893AE802CD1F9E400717A49 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = A893AE7F2CD1F9E400717A49 /* SkeletonView */; };
+		A893AE832CD20C0500717A49 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE812CD20C0500717A49 /* ProductDetailsViewController.swift */; };
+		A893AE842CD20C0500717A49 /* ProductDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A893AE822CD20C0500717A49 /* ProductDetailsViewController.xib */; };
+		A893AE912CD29F8C00717A49 /* Products.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A893AE8F2CD29F8C00717A49 /* Products.xcdatamodeld */; };
+		A893AE932CD2A18C00717A49 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893AE922CD2A18C00717A49 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +67,10 @@
 		A893AE6A2CD13C7500717A49 /* ProductCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductCell.xib; sourceTree = "<group>"; };
 		A893AE6E2CD13D3300717A49 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
 		A893AE732CD195AF00717A49 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		A893AE812CD20C0500717A49 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
+		A893AE822CD20C0500717A49 /* ProductDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailsViewController.xib; sourceTree = "<group>"; };
+		A893AE902CD29F8C00717A49 /* CachedProduct.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CachedProduct.xcdatamodel; sourceTree = "<group>"; };
+		A893AE922CD2A18C00717A49 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,7 @@
 		A893ADEA2CD1364E00717A49 /* Assignment-ProductList */ = {
 			isa = PBXGroup;
 			children = (
+				A893AE852CD2940E00717A49 /* Caching */,
 				A893AE6D2CD13CD500717A49 /* Services */,
 				A893AE1D2CD137D300717A49 /* Products */,
 				A893AE1C2CD137D000717A49 /* ProductDetails */,
@@ -193,6 +202,8 @@
 		A893AE212CD1382300717A49 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A893AE812CD20C0500717A49 /* ProductDetailsViewController.swift */,
+				A893AE822CD20C0500717A49 /* ProductDetailsViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -227,6 +238,15 @@
 				A893AE732CD195AF00717A49 /* NetworkManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		A893AE852CD2940E00717A49 /* Caching */ = {
+			isa = PBXGroup;
+			children = (
+				A893AE8F2CD29F8C00717A49 /* Products.xcdatamodeld */,
+				A893AE922CD2A18C00717A49 /* CoreDataManager.swift */,
+			);
+			path = Caching;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +363,7 @@
 			files = (
 				A893ADF82CD1364F00717A49 /* LaunchScreen.storyboard in Resources */,
 				A893AE6C2CD13C7500717A49 /* ProductCell.xib in Resources */,
+				A893AE842CD20C0500717A49 /* ProductDetailsViewController.xib in Resources */,
 				A893ADF52CD1364F00717A49 /* Assets.xcassets in Resources */,
 				A893AE292CD1389900717A49 /* ProductsViewController.xib in Resources */,
 			);
@@ -375,8 +396,11 @@
 				A893AE6B2CD13C7500717A49 /* ProductCell.swift in Sources */,
 				A893AE742CD195AF00717A49 /* NetworkManager.swift in Sources */,
 				A893AE2B2CD138AD00717A49 /* ProductsViewModel.swift in Sources */,
+				A893AE832CD20C0500717A49 /* ProductDetailsViewController.swift in Sources */,
 				A893AE6F2CD13D3300717A49 /* ProductService.swift in Sources */,
 				A893ADEE2CD1364E00717A49 /* SceneDelegate.swift in Sources */,
+				A893AE912CD29F8C00717A49 /* Products.xcdatamodeld in Sources */,
+				A893AE932CD2A18C00717A49 /* CoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +773,19 @@
 			productName = SkeletonView;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		A893AE8F2CD29F8C00717A49 /* Products.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A893AE902CD29F8C00717A49 /* CachedProduct.xcdatamodel */,
+			);
+			currentVersion = A893AE902CD29F8C00717A49 /* CachedProduct.xcdatamodel */;
+			path = Products.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A893ADE02CD1364D00717A49 /* Project object */;
 }

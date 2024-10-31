@@ -13,15 +13,19 @@ class ProductCell: UITableViewCell {
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productCategory: UILabel!
+    @IBOutlet weak var roundedView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
+        roundedView.layer.cornerRadius = 8
+        roundedView.layer.masksToBounds = false
+        roundedView.layer.shadowColor = UIColor.black.cgColor
+        roundedView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        roundedView.layer.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
     }
     
     func configureCell(with product: Product?) {
@@ -32,5 +36,4 @@ class ProductCell: UITableViewCell {
         let url = URL(string: product.image ?? "")
         productImage.kf.setImage(with: url)
     }
-    
 }

@@ -7,13 +7,16 @@
 
 import Foundation
 import Combine
+import CoreData
 
 class ProductsViewModel: ObservableObject{
     @Published var products: [Product] = []
     @Published var isLoading = false
     @Published var hasMoreData = true
-    @Published var isFetchingMore = false 
+    @Published var isFetchingMore = false
     @Published var errorMessage: String?
+    private let context = CoreDataManager.shared.persistentContainer.viewContext
+
     private let networkManager = NetworkManager()
     
     private var cancellables = Set<AnyCancellable>()
@@ -61,7 +64,7 @@ class ProductsViewModel: ObservableObject{
             .store(in: &cancellables)
     }
     func fetchMoreProducts(currentProduct: Product) {
-            guard hasMoreData, !isFetchingMore else { return }
-            fetchProducts(isInitialLoad: false)
-        }
+        guard hasMoreData, !isFetchingMore else { return }
+        fetchProducts(isInitialLoad: false)
+    }
 }

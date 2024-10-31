@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import SkeletonView
+import SwiftData
 class ProductsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var viewModel: ProductsViewModel
@@ -105,17 +106,23 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let product = viewModel.products[indexPath.row]
+        let detailVC = ProductDetailsViewController(product: product)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let frameHeight = scrollView.frame.size.height
         
-        if offsetY > contentHeight - frameHeight - 200 {  // Reduced threshold
-                    guard let lastProduct = viewModel.products.last else { return }
-                    if !viewModel.isFetchingMore {  // Ensure only one fetch at a time
-                        viewModel.fetchMoreProducts(currentProduct: lastProduct)
-                    }
-                }
+        if offsetY > contentHeight - frameHeight - 200 {
+            guard let lastProduct = viewModel.products.last else { return }
+            if !viewModel.isFetchingMore {
+                viewModel.fetchMoreProducts(currentProduct: lastProduct)
+            }
+        }
     }
 }
 
