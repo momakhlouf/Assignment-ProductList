@@ -8,17 +8,24 @@
 import UIKit
 import Combine
 import SkeletonView
-import SwiftData
 class ProductsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var viewModel: ProductsViewModel
     private var cancellables = Set<AnyCancellable>()
-    
+    private lazy var contentUnavailableVC: ContentUnavailableViewController = {
+        let vc = ContentUnavailableViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        vc.view.isHidden = true
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+        vc.fetchProducts = { [weak self] in
+            self?.viewModel.fetchProducts(isInitialLoad:true)
+        }
+        return vc
+    }()
     init(viewModel: ProductsViewModel){
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -26,6 +33,8 @@ class ProductsViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupBindings()
+        setupUnavailableView()
+
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -34,6 +43,7 @@ class ProductsViewController: UIViewController {
             tableView.showSkeleton()
         }
     }
+    
     func setupTableView(){
         tableView.delegate = self
         tableView.dataSource = self
@@ -42,8 +52,13 @@ class ProductsViewController: UIViewController {
     func setupBindings(){
         viewModel.$products
             .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.tableView.reloadData()
+            .sink { [weak self] products in
+                guard let self = self else { return }
+                if products.isEmpty {
+                    self.showUnavailableView(with: "No data available.")
+                } else {
+                    self.hideUnavailableView()
+                }
             }
             .store(in: &cancellables)
         
@@ -51,7 +66,8 @@ class ProductsViewController: UIViewController {
             .compactMap{$0}
             .receive(on: DispatchQueue.main)
             .sink { [weak self] message in
-                self?.showAlert(message: message)
+                //self?.showAlert(message: message)
+                self?.showUnavailableView(with: message)
             }
             .store(in: &cancellables)
         
@@ -60,19 +76,13 @@ class ProductsViewController: UIViewController {
             .sink { [weak self] isLoading in
                 guard let self = self else { return }
                 if isLoading {
-                    self.tableView.showSkeleton()
+                    self.hideUnavailableView()
                 } else {
                     self.tableView.hideSkeleton()
                 }
                 self.tableView.reloadData()
             }
             .store(in: &cancellables)
-    }
-    
-    func showAlert(message: String){
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
     }
 }
 
@@ -135,5 +145,32 @@ extension ProductsViewController: SkeletonTableViewDataSource {
     }
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "productCell"
+    }
+}
+
+
+extension ProductsViewController{
+    private func setupUnavailableView() {
+        addChild(contentUnavailableVC)
+        view.addSubview(contentUnavailableVC.view)
+        contentUnavailableVC.didMove(toParent: self)
+        
+        NSLayoutConstraint.activate([
+            contentUnavailableVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentUnavailableVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentUnavailableVC.view.topAnchor.constraint(equalTo: view.topAnchor),
+            contentUnavailableVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    private func showUnavailableView(with message: String) {
+        contentUnavailableVC.view.isHidden = false
+        contentUnavailableVC.unavailableMessage.text = message
+    }
+    private func hideUnavailableView() {
+        contentUnavailableVC.view.isHidden = true
+    }
+    @objc private func retryFetch() {
+        hideUnavailableView()
+        viewModel.fetchProducts(isInitialLoad: true)
     }
 }
