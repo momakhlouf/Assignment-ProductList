@@ -34,7 +34,6 @@ class ProductsViewController: UIViewController {
         setupTableView()
         setupBindings()
         setupUnavailableView()
-
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -43,7 +42,6 @@ class ProductsViewController: UIViewController {
             tableView.showSkeleton()
         }
     }
-    
     func setupTableView(){
         tableView.delegate = self
         tableView.dataSource = self
@@ -55,7 +53,7 @@ class ProductsViewController: UIViewController {
             .sink { [weak self] products in
                 guard let self = self else { return }
                 if products.isEmpty {
-                    self.showUnavailableView(with: "No data available.")
+                    //    self.showUnavailableView(with: "No data available.")
                 } else {
                     self.hideUnavailableView()
                 }
@@ -66,8 +64,8 @@ class ProductsViewController: UIViewController {
             .compactMap{$0}
             .receive(on: DispatchQueue.main)
             .sink { [weak self] message in
-                //self?.showAlert(message: message)
-                self?.showUnavailableView(with: message)
+                self?.showAlert(message: message)
+                //    self?.showUnavailableView(with: message)
             }
             .store(in: &cancellables)
         
@@ -84,6 +82,11 @@ class ProductsViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
 
 extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
@@ -98,7 +101,6 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
         cell.configureCell(with: product)
         return cell
     }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastSectionIndex = tableView.numberOfSections - 1
         let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
@@ -116,7 +118,6 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
             }
         }
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let product = viewModel.products[indexPath.row]
         let detailVC = ProductDetailsViewController(product: product)
@@ -135,7 +136,6 @@ extension ProductsViewController: UITableViewDelegate, UITableViewDataSource{
         }
     }
 }
-
 extension ProductsViewController: SkeletonTableViewDataSource {
     func numSections(in collectionSkeletonView: UITableView) -> Int {
         return 1
@@ -147,14 +147,11 @@ extension ProductsViewController: SkeletonTableViewDataSource {
         return "productCell"
     }
 }
-
-
 extension ProductsViewController{
     private func setupUnavailableView() {
         addChild(contentUnavailableVC)
         view.addSubview(contentUnavailableVC.view)
         contentUnavailableVC.didMove(toParent: self)
-        
         NSLayoutConstraint.activate([
             contentUnavailableVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentUnavailableVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),

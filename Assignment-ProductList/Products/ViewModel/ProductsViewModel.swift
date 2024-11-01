@@ -34,10 +34,6 @@ class ProductsViewModel: ObservableObject{
         }else {
             isFetchingMore = true
         }
-        guard networkManager.isConnected else {
-            errorMessage = "No internet connection."
-            return
-        }
         productService.fetchProducts(limit: currentPage + limit)
             .sink(receiveCompletion: { [weak self] completion in
                 self?.isLoading = false
@@ -46,6 +42,8 @@ class ProductsViewModel: ObservableObject{
                 case .finished:
                     break
                 case .failure(let error):
+                    self?.products = CoreDataManager.shared.fetchCachedProducts()
+                    print("from core data")
                     self?.errorMessage = error.localizedDescription
                     self?.hasMoreData = false
                 }
@@ -59,6 +57,7 @@ class ProductsViewModel: ObservableObject{
                 } else {
                     self.products.append(contentsOf: filteredProducts)
                     self.currentPage += self.limit
+                    CoreDataManager.shared.saveProducts(filteredProducts)
                 }
             })
             .store(in: &cancellables)

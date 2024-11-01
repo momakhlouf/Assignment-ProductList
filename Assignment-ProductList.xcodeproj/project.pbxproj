@@ -127,7 +127,7 @@
 		A893ADEA2CD1364E00717A49 /* Assignment-ProductList */ = {
 			isa = PBXGroup;
 			children = (
-				A893AE942CD3CDF200717A49 /* Utilities */,
+				A893AE942CD3CDF200717A49 /* ContentUnavailable */,
 				A893AE852CD2940E00717A49 /* Caching */,
 				A893AE6D2CD13CD500717A49 /* Services */,
 				A893AE1D2CD137D300717A49 /* Products */,
@@ -161,8 +161,6 @@
 		A893AE1C2CD137D000717A49 /* ProductDetails */ = {
 			isa = PBXGroup;
 			children = (
-				A893AE232CD1383800717A49 /* ViewModel */,
-				A893AE222CD1382600717A49 /* Model */,
 				A893AE212CD1382300717A49 /* View */,
 			);
 			path = ProductDetails;
@@ -213,20 +211,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		A893AE222CD1382600717A49 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		A893AE232CD1383800717A49 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		A893AE682CD13C4900717A49 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,13 +238,13 @@
 			path = Caching;
 			sourceTree = "<group>";
 		};
-		A893AE942CD3CDF200717A49 /* Utilities */ = {
+		A893AE942CD3CDF200717A49 /* ContentUnavailable */ = {
 			isa = PBXGroup;
 			children = (
 				A893AE952CD3CE1D00717A49 /* ContentUnavailableViewController.swift */,
 				A893AE962CD3CE1D00717A49 /* ContentUnavailableViewController.xib */,
 			);
-			path = Utilities;
+			path = ContentUnavailable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
